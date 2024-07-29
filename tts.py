@@ -1,7 +1,5 @@
 from gtts import gTTS
 import io
-# from langdetect import detect
-from headphones_play import headphones_play
 from EMOJI_LIB import replace_emojis
 
 # def detect_alphabet(text):
