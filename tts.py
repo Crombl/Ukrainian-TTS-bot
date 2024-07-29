@@ -2,21 +2,6 @@ from gtts import gTTS
 import io
 from EMOJI_LIB import replace_emojis
 
-# def detect_alphabet(text):
-#     # # Діапазони символів для кирилиці та латиниці
-#     # cyrillic_range = (0x0400, 0x04FF)  # Діапазон символів кирилиці
-#     # latin_range = (0x0041, 0x007A)    # Діапазон латинських букв (A-Z, a-z)
-
-#     # # Перевірка символів в тексті
-#     # for char in text:
-#     #     if cyrillic_range[0] <= ord(char) <= cyrillic_range[1]:
-#     #         return "uk"
-#     #     elif latin_range[0] <= ord(char) <= latin_range[1] or \
-#     #          latin_range[0] <= ord(char) <= latin_range[1] + 32:  # Додаємо латинські малі букви
-#     #         return "en"
-        
-#     return "uk"
-
 
 def get_speech(text):
 
