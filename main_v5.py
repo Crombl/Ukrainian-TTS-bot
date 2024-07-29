@@ -1,12 +1,5 @@
-'''
-+ перемикання постійної озвучки та тільки за командою
-+ створення черги
-+ повідомлення на приєднання нового учасника до гч
-- відтворення бажаних звуків
-- зупинка відтворення поточного повідомлення
-- тихий мод
-'''
-
+from pydub import AudioSegment
+from pydub.playback import play
 from tts import get_speech
 from EMOJI_LIB import show_all_em
 import discord
@@ -14,7 +7,6 @@ from discord.ext import commands
 import asyncio
 import os
 
-FFMPEG_PATH = "ffmpeg-2023-10-04-git-9078dc0c52-full_build/ffmpeg-2023-10-04-git-9078dc0c52-full_build/bin/ffmpeg.exe"
 text_queue = []
 always_lib = []
 active = False
@@ -33,10 +25,12 @@ intents.voice_states = True  # Додати це для моніторингу �
 
 bot = commands.Bot(command_prefix='.', intents=intents)
 
-
 async def main_sound(ctx, text):
     speech = get_speech(text)
-    audio_source = discord.FFmpegPCMAudio(speech, pipe=True, executable=FFMPEG_PATH)
+    audio = AudioSegment.from_file(speech)
+    audio.export("temp.wav", format="wav")
+
+    audio_source = discord.FFmpegPCMAudio("temp.wav")
     ctx.voice_client.play(audio_source, after=lambda e: print(f'Audio finished: {e}') if e else None)
 
 async def process_queue(ctx):
@@ -113,7 +107,10 @@ async def виходь(ctx):
             ctx.voice_client.stop()
         await ctx.send('ну і добре, піду 💢')
         speech = get_speech('ну і добре, піду 💢')
-        audio_source = discord.FFmpegPCMAudio(speech, pipe=True, executable=FFMPEG_PATH)
+        audio = AudioSegment.from_file(speech)
+        audio.export("temp.wav", format="wav")
+
+        audio_source = discord.FFmpegPCMAudio("temp.wav")
         ctx.voice_client.play(audio_source)
         while ctx.voice_client.is_playing():
             await asyncio.sleep(1)
